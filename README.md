@@ -21,3 +21,10 @@ sbot blobs.get "&o4gikuRPowHX8PFtBgzvqC69eN0sEImySKiWP530XNQ=.sha256"
 ```
 
 will output the generated markdown.
+
+## TODO
+
+- [ ] option to choose the message type (post instead of blob, etc)
+- [ ] channel option
+- [ ] add commentary string (at that point it should be called ssbify-object,
+  probly)
