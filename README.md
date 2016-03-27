@@ -1,7 +1,7 @@
 # ssbify-string
 
-takes an HTML string, URL, and returns a ssb blob-id representing the contents
-of the site.
+takes an HTML string, title string, and URL, returning a ssb blob-id
+representing the contents of the site.
 
 uses node-readability, and imports any images as hash-links.
 
@@ -12,12 +12,12 @@ with an error about it.
 ## usage
 
 ```
-ssbify http://blog.codinghorror.com/the-eternal-lorem-ipsum/
-# => &m9VsxJCJ4GMwkiSXolovyOOFjoICWoEyXjz7uAImq4w=.sha256
+ssbify '<html><body><h1>testing</h1><p>this is a test of ssbify-string</p></body></html>' 'test html blob'
+# => &o4gikuRPowHX8PFtBgzvqC69eN0sEImySKiWP530XNQ=.sha256
 ```
 
 ```
-sbot blobs.get "&m9VsxJCJ4GMwkiSXolovyOOFjoICWoEyXjz7uAImq4w=.sha256"
+sbot blobs.get "&o4gikuRPowHX8PFtBgzvqC69eN0sEImySKiWP530XNQ=.sha256"
 ```
 
 will output the generated markdown.

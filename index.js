@@ -1,4 +1,3 @@
-var readability = require('node-readability')
 var tomd = require('to-markdown')
 var striptags = require('striptags')
 var request = require('request')
@@ -37,13 +36,12 @@ var waitUntilHas = function (sbot, hash, cb) {
     }))
 }
 
-
 module.exports = function (sbot, htmlString, opts, cb) {
-  var postMarkdownWithBlobs = function(blobRes) {
-    var md = '# ' + htmlString.title + '\n\n' +
+  var postMarkdownWithBlobs = function (blobRes) {
+    var md = '# ' + opts.title + '\n\n' +
       striptags(tomd(doc.html())) + '\n\n' +
       '[source](' + opts.url + ')\n'
-    
+
     // remove superflous newlines
     md = md.replace(/\n\s*\n/g, '\n\n')
     addBlob(sbot, new Buffer(md), function (err, res) {
@@ -53,7 +51,7 @@ module.exports = function (sbot, htmlString, opts, cb) {
   }
 
   if (typeof opts === 'string') opts = { url: opts }
-  
+
   var doc = cheerio.load(htmlString)
 
   var modify = []

@@ -12,7 +12,8 @@ ssbClient(function (err, sbot) {
   if (err) throw err
   ssbifyString(sbot, process.argv[2],
                { ignoreBrokenLinks: true,
-                 url: process.argv[3] || '' },
+                 title: process.argv[3] || 'untitled snippet',
+                 url: process.argv[4] || '' },
                function (err, res) {
                  if (err) throw err
                  console.log(res)
