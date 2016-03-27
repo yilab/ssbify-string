@@ -37,46 +37,46 @@ var waitUntilHas = function (sbot, hash, cb) {
     }))
 }
 
-module.exports = function (sbot, opts, cb) {
-  if (typeof opts === 'string') opts = { url: opts }
-  readability(opts.url, function (err, article) {
-    if (err) return cb(err)
 
-    var doc = cheerio.load(article.content)
-
-    var modify = []
-    doc('img').map(function (i, el) { modify.push(el) })
-
-    async.map(modify, function (el, mcb) {
-      var src = el.attribs.src
-      request.get(src, { encoding: null }, function (err, res, body) {
-        if (err) throw err
-        if (res.statusCode === 200) {
-          addBlob(sbot, new Buffer(body), function (err, res) {
-            if (err) throw err
-            el.attribs.src = res
-            mcb(null)
-          })
-        } else {
-          if (opts.ignoreBrokenImgLinks) {
-            el.attribs.src = ''
-            mcb(null)
-          } else {
-            cb(new Error('broken image link at: ' + src))
-          }
-        }
-      })
-    }, function (res) {
-      var md = '# ' + article.title + '\n\n' +
-        striptags(tomd(doc.html())) + '\n\n' +
-        '[ssbify source](' + opts.url + ')\n'
-
-      // remove superflous newlines
-      md = md.replace(/\n\s*\n/g, '\n\n')
-      addBlob(sbot, new Buffer(md), function (err, res) {
-        if (err) return cb(err)
-        waitUntilHas(sbot, res, cb)
-      })
+module.exports = function (sbot, htmlString, opts, cb) {
+  var postMarkdownWithBlobs = function(blobRes) {
+    var md = '# ' + htmlString.title + '\n\n' +
+      striptags(tomd(doc.html())) + '\n\n' +
+      '[source](' + opts.url + ')\n'
+    
+    // remove superflous newlines
+    md = md.replace(/\n\s*\n/g, '\n\n')
+    addBlob(sbot, new Buffer(md), function (err, res) {
+      if (err) return cb(err)
+      waitUntilHas(sbot, res, cb)
     })
-  })
+  }
+
+  if (typeof opts === 'string') opts = { url: opts }
+  
+  var doc = cheerio.load(htmlString)
+
+  var modify = []
+  doc('img').map(function (i, el) { modify.push(el) })
+
+  async.map(modify, function (el, mcb) {
+    var src = el.attribs.src
+    request.get(src, { encoding: null }, function (err, res, body) {
+      if (err) throw err
+      if (res.statusCode === 200) {
+        addBlob(sbot, new Buffer(body), function (err, res) {
+          if (err) throw err
+          el.attribs.src = res
+          mcb(null)
+        })
+      } else {
+        if (opts.ignoreBrokenImgLinks) {
+          el.attribs.src = ''
+          mcb(null)
+        } else {
+          cb(new Error('broken image link at: ' + src))
+        }
+      }
+    })
+  }, postMarkdownWithBlobs)
 }

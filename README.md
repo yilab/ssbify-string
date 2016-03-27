@@ -1,8 +1,13 @@
-# ssbify
+# ssbify-string
 
-Takes an url and returns a ssb blob-id representing the contents of the site.
+takes an HTML string, URL, and returns a ssb blob-id representing the contents
+of the site.
 
-Uses node-readability, and imports any images as hash-links.
+uses node-readability, and imports any images as hash-links.
+
+pass `{ ignoreBrokenImgLinks: true }` as a prop in the third function argument
+to get graceful behavior in that case (default). pass false to fail and callback
+with an error about it.
 
 ## usage
 
@@ -15,4 +20,4 @@ ssbify http://blog.codinghorror.com/the-eternal-lorem-ipsum/
 sbot blobs.get "&m9VsxJCJ4GMwkiSXolovyOOFjoICWoEyXjz7uAImq4w=.sha256"
 ```
 
-Will output the markdown.
+will output the generated markdown.
