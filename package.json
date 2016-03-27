@@ -10,10 +10,9 @@
     "ssb"
   ],
   "bin": "bin.js",
-  "author": "Kristoffer Ström <kristoffer@rymdkoloni.se>",
+  "author": "Kristoffer Ström <kristoffer@rymdkoloni.se>, dust <du5t@multiplexed.be>",
   "license": "MIT",
   "scripts": {
-    "test": "ln -s .. node_modules/exoform ; node test/test.js",
     "lint": "standard"
   },
   "pre-commit": [
