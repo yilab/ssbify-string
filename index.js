@@ -37,13 +37,20 @@ var waitUntilHas = function (sbot, hash, cb) {
 }
 
 module.exports = function (sbot, htmlString, opts, cb) {
-  var postMarkdownWithBlobs = function (blobRes) {
+  var markItDown = function(blobbedHTML) {
     var md = '# ' + opts.title + '\n\n' +
       striptags(tomd(doc.html())) + '\n\n' +
       '[source](' + opts.url + ')\n'
 
     // remove superflous newlines
     md = md.replace(/\n\s*\n/g, '\n\n')
+
+    return md
+  }
+
+  var postMarkdownWithBlobs = function (blobRes) {
+    var md = markItDown(blobRes)
+
     addBlob(sbot, new Buffer(md), function (err, res) {
       if (err) return cb(err)
       waitUntilHas(sbot, res, cb)
@@ -76,5 +83,8 @@ module.exports = function (sbot, htmlString, opts, cb) {
         }
       }
     })
-  }, postMarkdownWithBlobs)
+  }, function(blobRes) {
+       if (opts.xmitAsBlob) postMarkdownWithBlobs(blobRes)
+       else cb(null, markItDown(blobRes))
+     })
 }

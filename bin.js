@@ -13,7 +13,9 @@ ssbClient(function (err, sbot) {
   ssbifyString(sbot, process.argv[2],
                { ignoreBrokenLinks: true,
                  title: process.argv[3] || 'untitled snippet',
-                 url: process.argv[4] || '' },
+                 url: process.argv[4] || '',
+                 xmitAsBlob: process.argv[5] || false
+               },
                function (err, res) {
                  if (err) throw err
                  console.log(res)

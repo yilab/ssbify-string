@@ -1,6 +1,6 @@
 {
   "name": "ssbify-string",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "turns strings into ssb-markdown",
   "main": "index.js",
   "scripts": {
