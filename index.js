@@ -67,8 +67,8 @@ module.exports = function (sbot, htmlString, opts, cb) {
   async.map(modify, function (el, mcb) {
     var src = el.attribs.src
     request.get(src, { encoding: null }, function (err, res, body) {
-      if (err) throw err
-      if (res.statusCode === 200) {
+      // if (err) throw err
+      if ( res && res.statusCode === 200) {
         addBlob(sbot, new Buffer(body), function (err, res) {
           if (err) throw err
           el.attribs.src = res
@@ -79,7 +79,8 @@ module.exports = function (sbot, htmlString, opts, cb) {
           el.attribs.src = ''
           mcb(null)
         } else {
-          cb(new Error('broken image link at: ' + src))
+          mcb(null)
+          //cb(new Error('broken image link at: ' + src))
         }
       }
     })
