@@ -2,6 +2,7 @@
 
 var ssbClient = require('ssb-client')
 var ssbifyString = require('./index.js')
+const fs = require("fs")
 
 if (!process.argv[2]) {
   console.error('usage: ssbify <string of valid HTML>')
@@ -10,7 +11,11 @@ if (!process.argv[2]) {
 
 ssbClient(function (err, sbot) {
   if (err) throw err
-  ssbifyString(sbot, process.argv[2],
+  var html = process.argv[2]
+  if (html === '-'){
+    html = fs.readFileSync("/dev/stdin", "utf-8")
+  }
+  ssbifyString(sbot, html,
                { ignoreBrokenLinks: true,
                  title: process.argv[3] || 'untitled snippet',
                  url: process.argv[4] || '',
