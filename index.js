@@ -38,7 +38,7 @@ var waitUntilHas = function (sbot, hash, cb) {
 
 module.exports = function (sbot, htmlString, opts, cb) {
   var markItDown = function(blobbedHTML) {
-    var md = '# ' + opts.title + '\n\n' +
+    var md = '\ufeff# ' + opts.title + '\n\n' +
       striptags(tomd(doc.html())) + '\n\n' +
       '[source](' + opts.url + ')\n'
 
