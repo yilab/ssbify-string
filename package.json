@@ -1,5 +1,5 @@
 {
-  "name": "ssbify-string",
+  "name": "ssbify-bom",
   "version": "1.1.0",
   "description": "turns strings into ssb-markdown",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "ssb"
   ],
   "bin": "bin.js",
-  "author": "Kristoffer Ström <kristoffer@rymdkoloni.se>, dust <du5t@multiplexed.be>",
+  "author": "Kristoffer Ström <kristoffer@rymdkoloni.se>, dust <du5t@multiplexed.be>, Yi Wang",
   "license": "MIT",
   "dependencies": {
     "async": "^1.5.2",

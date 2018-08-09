@@ -1,4 +1,4 @@
-# ssbify-string
+# ssbify-bom
 
 takes an HTML string, title string, and URL, returning either a markdown string
 with ssb blob links for content, or an ssb blob-id representing the post
